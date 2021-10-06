@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 
@@ -17,10 +18,14 @@ const App = () => {
   }, [])
 
   return (
-    <LoggedInUserContext.Provider value={{user, setUser, errorMessage, setErrorMessage}}>
+    <LoggedInUserContext.Provider value={{ user, setUser, errorMessage, setErrorMessage }}>
       <div>
         <h2>blogs</h2>
-        <LoginForm setErrorMessage={setErrorMessage} />
+        {user ?
+          <BlogForm />
+          :
+          <LoginForm setErrorMessage={setErrorMessage} />
+        }
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}

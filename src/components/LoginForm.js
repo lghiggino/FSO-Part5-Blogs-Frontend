@@ -7,8 +7,8 @@ export default function LoginForm({ setErrorMessage }) {
     const [password, setPassword] = useState("")
 
     const { user, setUser } = useContext(LoggedInUserContext)
-
     //valid login with lghiggino - lghiggino
+
 
     async function userLogin() {
         try {
