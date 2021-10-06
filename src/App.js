@@ -1,23 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import LoginForm from './components/LoginForm'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 
+import { LoggedInUserContext } from './contexts/LoggedInUser'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [user, setUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
+      setBlogs(blogs)
+    )
   }, [])
 
   return (
-    <div>
-      <h2>blogs</h2>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
-      )}
-    </div>
+    <LoggedInUserContext.Provider value={{user, setUser, errorMessage, setErrorMessage}}>
+      <div>
+        <h2>blogs</h2>
+        <LoginForm setErrorMessage={setErrorMessage} />
+        {blogs.map(blog =>
+          <Blog key={blog.id} blog={blog} />
+        )}
+      </div>
+    </LoggedInUserContext.Provider>
   )
 }
 
