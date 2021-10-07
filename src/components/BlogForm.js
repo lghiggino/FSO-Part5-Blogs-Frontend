@@ -1,6 +1,9 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { LoggedInUserContext } from "../contexts/LoggedInUser"
 
 export default function BlogForm() {
+    const { user, setUser } = useContext(LoggedInUserContext)
+
     const [blog, setBlog] = useState({
         title: "",
         author: "",
@@ -13,6 +16,7 @@ export default function BlogForm() {
 
     return (
         <>
+            <p>{user.name} is logged in</p>
             <label htmlFor="title">Title</label>
             <input
                 name="title"
@@ -34,7 +38,7 @@ export default function BlogForm() {
                 value={blog.url}
                 onChange={(event) => { setBlog({ ...blog, url: event.target.value }) }}
             />
-            <button onClick={postBlog}>Post</button>
+            <button onClick={postBlog}>Save Blog3</button>
         </>
     )
 }
