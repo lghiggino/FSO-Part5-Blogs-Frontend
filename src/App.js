@@ -12,6 +12,13 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
+    if(localStorage.getItem("blogsAppUser")){
+      const user = localStorage.getItem("blogsAppUser")
+      setUser(JSON.parse(user))
+    }
+  }, [])
+
+  useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )

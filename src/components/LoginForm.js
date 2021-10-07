@@ -14,6 +14,7 @@ export default function LoginForm({ setErrorMessage }) {
         try {
             const user = await loginService.login({ username, password })
             setUser(user)
+            localStorage.setItem("blogsAppUser", JSON.stringify(user))
             setUsername("")
             setPassword("")
         }
