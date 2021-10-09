@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
+import blogService from './services/blogService'
 
 import { LoggedInUserContext } from './contexts/LoggedInUser'
 

@@ -1,5 +1,7 @@
 import { useState, useContext } from "react"
 import { LoggedInUserContext } from "../contexts/LoggedInUser"
+import blogService from "../services/blogService"
+
 
 export default function BlogForm() {
     const { user, setUser } = useContext(LoggedInUserContext)
@@ -10,8 +12,20 @@ export default function BlogForm() {
         url: "",
     })
 
-    function postBlog() {
-        console.log(blog)
+    async function postBlog() {
+        const payload = {
+            user: user,
+            title: blog.title,
+            author: blog.author,
+            url: blog.url
+        }
+        try {
+            const res = await blogService.createBlog(payload)
+            console.log(res)
+        } catch (error) {
+            console.error(error)
+        }
+
     }
 
     function logout() {

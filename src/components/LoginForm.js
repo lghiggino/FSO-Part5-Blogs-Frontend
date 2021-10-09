@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
+import blogService from "../services/blogService";
 import loginService from "../services/loginService";
 
 export default function LoginForm({ setErrorMessage }) {
@@ -10,11 +11,12 @@ export default function LoginForm({ setErrorMessage }) {
     //valid login with lghiggino - lghiggino
 
 
-    async function userLogin() {
+    async function handleLogin() {
         try {
             const user = await loginService.login({ username, password })
             setUser(user)
             localStorage.setItem("blogsAppUser", JSON.stringify(user))
+            blogService.setToken(user.token)
             setUsername("")
             setPassword("")
         }
@@ -41,7 +43,7 @@ export default function LoginForm({ setErrorMessage }) {
                 onChange={(event) => { setPassword(event.target.value) }}
             />
 
-            <button onClick={() => { userLogin() }}>Login</button>
+            <button onClick={() => { handleLogin() }}>Login</button>
 
             {user &&
                 <pre>{JSON.stringify(user, null, 2)}</pre>
