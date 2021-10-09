@@ -16,6 +16,7 @@ export default function BlogForm() {
 
     function logout() {
         localStorage.removeItem("blogsAppUser")
+        setUser(null)
     }
 
     return (
