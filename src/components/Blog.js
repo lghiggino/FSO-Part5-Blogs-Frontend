@@ -6,7 +6,7 @@ const Blog = ({ blog }) => {
       {
         display: "flex",
         flexDirection: "row",
-        maxWidth: "50vw"
+        flex: 1,
       }
     }>
       <span style={

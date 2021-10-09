@@ -9,7 +9,7 @@ import { LoggedInUserContext } from './contexts/LoggedInUser'
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState({ message: "", variant: "" })
 
   useEffect(() => {
     if (localStorage.getItem("blogsAppUser")) {
@@ -24,9 +24,9 @@ const App = () => {
       const allBlogs = await blogService.getAll()
       setBlogs(allBlogs)
     } catch (error) {
-      setErrorMessage(error.message)
+      setNotificationMessage({ message: `Failure loading blogs ${error.message}`, variant: "error" })
       setTimeout(() => {
-        setErrorMessage("")
+        setNotificationMessage({ message: "", variant: "" })
       }, 5000)
     }
   }
@@ -38,17 +38,31 @@ const App = () => {
   }, [])
 
   return (
-    <LoggedInUserContext.Provider value={{ user, setUser, errorMessage, setErrorMessage }}>
+    <LoggedInUserContext.Provider value={{ user, setUser, errorMessage: notificationMessage, setErrorMessage: setNotificationMessage }}>
       <div>
         <h2>{user ? "blogs" : "Log in to the application"}</h2>
         {user ?
-          <BlogForm getAllBlogs={getAllBlogs}/>
+          <BlogForm getAllBlogs={getAllBlogs} setNotificationMessage={setNotificationMessage} />
           :
-          <LoginForm setErrorMessage={setErrorMessage} />
+          <LoginForm setNotificationMessage={setNotificationMessage} />
         }
         <br />
         <br />
-        {errorMessage && <div><h4 style={{color: "red"}}>{errorMessage}</h4></div>}
+        {notificationMessage &&
+          <div>
+            <h4 style={
+              notificationMessage.variant === "success" ?
+                { color: "blue" }
+                :
+                notificationMessage.variant === "error" ? 
+                { color: "red" }
+                :
+                {color: "black"}}
+                >
+              {notificationMessage.message}
+            </h4>
+          </div>
+        }
         <div >
           {blogs.map((blog, idx) =>
             <Blog key={blog.id} blog={blog} />

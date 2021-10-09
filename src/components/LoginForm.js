@@ -3,7 +3,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser";
 import blogService from "../services/blogService";
 import loginService from "../services/loginService";
 
-export default function LoginForm({ setErrorMessage }) {
+export default function LoginForm({ setNotificationMessage }) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
@@ -19,12 +19,16 @@ export default function LoginForm({ setErrorMessage }) {
             blogService.setToken(user.token)
             setUsername("")
             setPassword("")
+            setNotificationMessage({ message: "Logged in sucessfully", variant: "success" })
+            setTimeout(() => {
+                setNotificationMessage({message: "",  variant: "" })
+            }, 5000)
         }
         catch (error) {
             console.log(error)
-            setErrorMessage('Wrong credentials')
+            setNotificationMessage({ message: `Wrong credentials - ${error.message}`, variant: "error" })
             setTimeout(() => {
-                setErrorMessage(null)
+                setNotificationMessage({message: "",  variant: "" })
             }, 5000)
         }
     }

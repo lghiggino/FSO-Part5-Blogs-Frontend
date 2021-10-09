@@ -3,7 +3,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser"
 import blogService from "../services/blogService"
 
 
-export default function BlogForm({ getAllBlogs }) {
+export default function BlogForm({ getAllBlogs, setNotificationMessage }) {
     const { user, setUser } = useContext(LoggedInUserContext)
 
     const [blog, setBlog] = useState({
@@ -22,8 +22,13 @@ export default function BlogForm({ getAllBlogs }) {
         try {
             const res = await blogService.createBlog(payload)
             console.log("res do postBlog", res)
+            setNotificationMessage({ message: "Blog created successfully", variant: "success" })
+            setTimeout(() => {
+                setNotificationMessage({message: "",  variant: "" })
+            }, 5000)
         } catch (error) {
-            console.error(error)
+            console.error(error.message)
+            setNotificationMessage({ message: `Error creating blog - ${error.message}`, variant: "error" })
         }finally{
             getAllBlogs()
         }
@@ -60,7 +65,7 @@ export default function BlogForm({ getAllBlogs }) {
                     alignItems: "center",
                     justifyContent: "start",
                     justifyItems: "stretch",
-                    maxWidth: "200px"
+                    maxWidth: "200px",
                 }
             }>
                 <div>
