@@ -3,7 +3,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser"
 import blogService from "../services/blogService"
 
 
-export default function BlogForm() {
+export default function BlogForm({ getAllBlogs }) {
     const { user, setUser } = useContext(LoggedInUserContext)
 
     const [blog, setBlog] = useState({
@@ -21,9 +21,11 @@ export default function BlogForm() {
         }
         try {
             const res = await blogService.createBlog(payload)
-            console.log(res)
+            console.log("res do postBlog", res)
         } catch (error) {
             console.error(error)
+        }finally{
+            getAllBlogs()
         }
 
     }
