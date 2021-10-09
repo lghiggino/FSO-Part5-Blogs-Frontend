@@ -12,16 +12,29 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
-    if(localStorage.getItem("blogsAppUser")){
+    if (localStorage.getItem("blogsAppUser")) {
       const user = localStorage.getItem("blogsAppUser")
       setUser(JSON.parse(user))
     }
   }, [])
 
+
+  async function getAllBlogs() {
+    try {
+      const allBlogs = await blogService.getAll()
+      setBlogs(allBlogs)
+    } catch (error) {
+      setErrorMessage(error.message)
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 5000)
+    }
+  }
+
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )
+    (async () => {
+      await getAllBlogs()
+    })()
   }, [])
 
   return (
@@ -29,16 +42,17 @@ const App = () => {
       <div>
         <h2>{user ? "blogs" : "Log in to the application"}</h2>
         {user ?
-          <BlogForm />
+          <BlogForm getAllBlogs={getAllBlogs}/>
           :
           <LoginForm setErrorMessage={setErrorMessage} />
         }
         <br />
         <br />
+        {errorMessage && <div><h4 style={{color: "red"}}>{errorMessage}</h4></div>}
         <div >
-        {blogs.map((blog, idx) =>
-          <Blog key={blog.id} blog={blog}/>
-        )}
+          {blogs.map((blog, idx) =>
+            <Blog key={blog.id} blog={blog} />
+          )}
         </div>
       </div>
     </LoggedInUserContext.Provider>
