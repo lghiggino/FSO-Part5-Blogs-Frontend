@@ -3,7 +3,7 @@ import { LoggedInUserContext } from "../contexts/LoggedInUser";
 import blogService from "../services/blogService";
 import loginService from "../services/loginService";
 
-export default function LoginForm({ setNotificationMessage }) {
+export default function LoginForm({ setNotificationMessage, setShowLoginForm }) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
@@ -23,6 +23,7 @@ export default function LoginForm({ setNotificationMessage }) {
             setTimeout(() => {
                 setNotificationMessage({message: "",  variant: "" })
             }, 5000)
+            setShowLoginForm(false)
         }
         catch (error) {
             console.log(error)
@@ -49,9 +50,9 @@ export default function LoginForm({ setNotificationMessage }) {
 
             <button onClick={() => { handleLogin() }}>Login</button>
 
-            {user &&
+            {/* {user &&
                 <pre>{JSON.stringify(user, null, 2)}</pre>
-            }
+            } */}
         </>
     )
 }

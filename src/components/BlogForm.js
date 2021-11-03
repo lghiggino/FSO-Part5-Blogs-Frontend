@@ -24,20 +24,23 @@ export default function BlogForm({ getAllBlogs, setNotificationMessage }) {
             console.log("res do postBlog", res)
             setNotificationMessage({ message: "Blog created successfully", variant: "success" })
             setTimeout(() => {
-                setNotificationMessage({message: "",  variant: "" })
+                setNotificationMessage({ message: "", variant: "" })
             }, 5000)
         } catch (error) {
             console.error(error.message)
             setNotificationMessage({ message: `Error creating blog - ${error.message}`, variant: "error" })
-        }finally{
+        } finally {
             getAllBlogs()
         }
-
     }
 
     function logout() {
         localStorage.removeItem("blogsAppUser")
         setUser(null)
+        setNotificationMessage({ message: "logged out successfully", variant: "success" })
+        setTimeout(() => {
+            setNotificationMessage({ message: "", variant: "" })
+        }, 5000)
     }
 
     return (

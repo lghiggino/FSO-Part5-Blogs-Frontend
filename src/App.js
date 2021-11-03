@@ -10,6 +10,8 @@ const App = () => {
   const [blogs, setBlogs] = useState([])
   const [user, setUser] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState({ message: "", variant: "" })
+  const [showLoginForm, setShowLoginForm] = useState(false)
+  const [showBlogForm, setShowBlogForm] = useState(false)
 
   useEffect(() => {
     if (localStorage.getItem("blogsAppUser")) {
@@ -41,11 +43,30 @@ const App = () => {
     <LoggedInUserContext.Provider value={{ user, setUser, errorMessage: notificationMessage, setErrorMessage: setNotificationMessage }}>
       <div>
         <h2>{user ? "blogs" : "Log in to the application"}</h2>
-        {user ?
-          <BlogForm getAllBlogs={getAllBlogs} setNotificationMessage={setNotificationMessage} />
-          :
-          <LoginForm setNotificationMessage={setNotificationMessage} />
+
+        {!user &&
+          <button
+            onClick={() => { setShowLoginForm(!showLoginForm) }}
+          >
+            {showLoginForm ? "Cancel" : "Login"}
+          </button>
         }
+
+        {showLoginForm && <LoginForm setNotificationMessage={setNotificationMessage} setShowLoginForm={setShowLoginForm} />}
+
+        {user && showBlogForm &&
+          <BlogForm getAllBlogs={getAllBlogs} setNotificationMessage={setNotificationMessage} />
+        }
+        <br />
+        <br />
+        <div>
+          <button
+            onClick={() => {
+              setShowBlogForm(!showBlogForm)
+            }}>
+            {showBlogForm ? "Cancel" : "Create New Blog"}
+          </button>
+        </div>
         <br />
         <br />
         {notificationMessage &&
@@ -54,11 +75,11 @@ const App = () => {
               notificationMessage.variant === "success" ?
                 { color: "blue" }
                 :
-                notificationMessage.variant === "error" ? 
-                { color: "red" }
-                :
-                {color: "black"}}
-                >
+                notificationMessage.variant === "error" ?
+                  { color: "red" }
+                  :
+                  { color: "black" }}
+            >
               {notificationMessage.message}
             </h4>
           </div>
