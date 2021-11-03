@@ -23,6 +23,11 @@ export default function BlogForm({ getAllBlogs, setNotificationMessage }) {
             const res = await blogService.createBlog(payload)
             console.log("res do postBlog", res)
             setNotificationMessage({ message: "Blog created successfully", variant: "success" })
+            setBlog({
+                title: "",
+                author: "",
+                url: "",
+            })
             setTimeout(() => {
                 setNotificationMessage({ message: "", variant: "" })
             }, 5000)
