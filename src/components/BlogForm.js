@@ -1,6 +1,7 @@
 import { useState, useContext } from "react"
 import { LoggedInUserContext } from "../contexts/LoggedInUser"
 import blogService from "../services/blogService"
+import propTypes from 'prop-types'
 
 
 export default function BlogForm({ getAllBlogs, setNotificationMessage }) {
@@ -110,4 +111,9 @@ export default function BlogForm({ getAllBlogs, setNotificationMessage }) {
 
         </>
     )
+}
+
+BlogForm.propTypes = { 
+    getAllBlogs: propTypes.func.isRequired, 
+    setNotificationMessage: propTypes.func.isRequired
 }

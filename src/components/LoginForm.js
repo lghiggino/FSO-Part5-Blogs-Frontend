@@ -2,14 +2,14 @@ import { useContext, useState } from "react";
 import { LoggedInUserContext } from "../contexts/LoggedInUser";
 import blogService from "../services/blogService";
 import loginService from "../services/loginService";
+import propTypes from "prop-types"
 
 export default function LoginForm({ setNotificationMessage, setShowLoginForm }) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
-    const { user, setUser } = useContext(LoggedInUserContext)
+    const { setUser } = useContext(LoggedInUserContext)
     //valid login with lghiggino - lghiggino
-
 
     async function handleLogin() {
         try {
@@ -55,4 +55,9 @@ export default function LoginForm({ setNotificationMessage, setShowLoginForm }) 
             } */}
         </>
     )
+}
+
+LoginForm.propTypes = {
+    setNotificationMessage: propTypes.func.isRequired, 
+    setShowLoginForm: propTypes.func.isRequired
 }
