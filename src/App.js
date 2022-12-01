@@ -5,6 +5,7 @@ import loginService from "./services/login";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
+  const [newBlog, setNewBlog] = useState("");
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,6 +14,11 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
   }, []);
+
+  const addBlog = (event) => {
+    event.preventDefault();
+    console.log("try to add new blog with:", newBlog);
+  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -33,27 +39,46 @@ const App = () => {
     }
   };
 
+  const loginForm = () => (
+    <form onSubmit={handleLogin}>
+      <label>Username</label>
+      <input
+        type="text"
+        value={username}
+        name="Username"
+        onChange={({ target }) => setUsername(target.value)}
+      />
+      <label>Password</label>
+      <input
+        type="password"
+        value={password}
+        name="Password"
+        onChange={({ target }) => setPassword(target.value)}
+      />
+      <button type="submit">login</button>
+    </form>
+  );
+
+  const blogForm = () => (
+    <form onSubmit={addBlog}>
+      <input
+        value={newBlog}
+        onChange={({ target }) => setNewBlog(target.value)}
+      />
+      <button type="submit">save</button>
+    </form>
+  );
+
   return (
     <div>
-      <div>
-        <form onSubmit={handleLogin}>
-          <label>Username</label>
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-          <button type="submit">login</button>
-        </form>
-      </div>
+      {user === null ? (
+        loginForm()
+      ) : (
+        <div>
+          <p>{user.name} logged-in</p>
+          {blogForm()}
+        </div>
+      )}
 
       <h2>blogs</h2>
       {blogs.map((blog) => (
