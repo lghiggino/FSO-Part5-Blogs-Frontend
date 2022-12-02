@@ -28,6 +28,12 @@ const App = () => {
         username,
         password,
       });
+
+      window.localStorage.setItem("loggedInBlogUser", JSON.stringify(user));
+
+      blogService.setToken(user.token);
+      blogService.setUserId(user.token);
+
       setUser(user);
       setUsername("");
       setPassword("");
