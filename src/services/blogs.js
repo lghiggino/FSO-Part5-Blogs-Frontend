@@ -20,7 +20,7 @@ const setAuthor = (authorName) => {
 
 const getAll = async () => {
   const request = await axios.get(baseUrl);
-  return request.then((response) => response.data);
+  return request.data;
 };
 
 const create = async (newBlog) => {

@@ -11,6 +11,7 @@ const App = () => {
   const [password, setPassword] = useState("");
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const [newBlogData, setNewBlogData] = useState({
     title: "",
@@ -32,7 +33,7 @@ const App = () => {
     }
   }, []);
 
-  const addBlog = (event) => {
+  const addBlog = async (event) => {
     event.preventDefault();
 
     if (!newBlogData.title || !newBlogData.url) {
@@ -43,9 +44,23 @@ const App = () => {
       return;
     }
 
-    blogService.create(newBlogData);
+    const createdBlog = await blogService.create(newBlogData);
 
-    window.location.reload();
+    console.log(createdBlog);
+
+    setMessage(`a new blog ${createdBlog.title} by ${createdBlog.author}`);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+
+    const newBlogList = blogs.concat({
+      title: createdBlog.title,
+      author: createdBlog.author,
+      id: createdBlog.id,
+    });
+
+    setBlogs(newBlogList);
   };
 
   const handleLogin = async (event) => {
@@ -116,6 +131,12 @@ const App = () => {
 
   return (
     <div>
+      {message && (
+        <div>
+          <p>{message}</p>
+        </div>
+      )}
+
       {errorMessage && (
         <div>
           <p>{errorMessage}</p>
