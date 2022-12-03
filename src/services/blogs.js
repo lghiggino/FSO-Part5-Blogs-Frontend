@@ -18,31 +18,31 @@ const setAuthor = (authorName) => {
   author = authorName;
 };
 
-const getAll = () => {
-  const request = axios.get(baseUrl);
+const getAll = async () => {
+  const request = await axios.get(baseUrl);
   return request.then((response) => response.data);
 };
 
-const create = (newBlog) => {
+const create = async (newBlog) => {
   const config = {
     headers: { Authorization: token },
   };
 
-  const response = axios.post(
+  const { data } = await axios.post(
     baseUrl,
     { ...newBlog, userId: id, author },
     config
   );
 
-  return response.data;
+  return data;
 };
 
-const update = (id, updatedBlog) => {
+const update = async (id, updatedBlog) => {
   const config = {
     headers: { Authorization: token },
   };
 
-  const response = axios.put(
+  const response = await axios.put(
     `${baseUrl}/${id}`,
     { ...updatedBlog, userId: id },
     config
