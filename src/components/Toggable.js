@@ -13,7 +13,12 @@ const Togglable = ({ buttonLabel, children }) => {
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{buttonLabel}</button>
+        <button
+          onClick={toggleVisibility}
+          style={{ textTransform: "capitalize" }}
+        >
+          {buttonLabel}
+        </button>
       </div>
       <div style={showWhenVisible}>
         {children}

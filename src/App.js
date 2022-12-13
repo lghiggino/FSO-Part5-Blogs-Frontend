@@ -50,12 +50,14 @@ const App = () => {
       {user && (
         <div>
           <p>{user.name} logged-in</p>
-          <BlogForm
-            setMessage={setMessage}
-            setErrorMessage={setErrorMessage}
-            setBlogs={setBlogs}
-            blogs={blogs}
-          />
+          <Togglable buttonLabel="create new blog post">
+            <BlogForm
+              setMessage={setMessage}
+              setErrorMessage={setErrorMessage}
+              setBlogs={setBlogs}
+              blogs={blogs}
+            />
+          </Togglable>
         </div>
       )}
 
