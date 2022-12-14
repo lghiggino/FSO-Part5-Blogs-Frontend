@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
 import { LoginForm } from "./components/LoginForm";
 import { BlogForm } from "./components/BlogForm";
@@ -27,6 +27,8 @@ const App = () => {
     }
   }, []);
 
+  const blogFormRef = useRef();
+
   return (
     <div>
       {message && (
@@ -50,12 +52,13 @@ const App = () => {
       {user && (
         <div>
           <p>{user.name} logged-in</p>
-          <Togglable buttonLabel="create new blog post">
+          <Togglable buttonLabel="create new blog post" ref={blogFormRef}>
             <BlogForm
               setMessage={setMessage}
               setErrorMessage={setErrorMessage}
               setBlogs={setBlogs}
               blogs={blogs}
+              blogFormRef={blogFormRef}
             />
           </Togglable>
         </div>

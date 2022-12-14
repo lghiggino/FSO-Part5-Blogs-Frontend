@@ -1,7 +1,7 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
 
-export const BlogForm = ({ setMessage, setErrorMessage, setBlogs, blogs }) => {
+export const BlogForm = ({ setMessage, setErrorMessage, setBlogs, blogs, blogFormRef }) => {
   const [newBlogData, setNewBlogData] = useState({
     title: "",
     url: "",
@@ -19,6 +19,7 @@ export const BlogForm = ({ setMessage, setErrorMessage, setBlogs, blogs }) => {
     }
 
     const createdBlog = await blogService.create(newBlogData);
+    blogFormRef.current.toggleVisibility();
 
     setMessage(`a new blog ${createdBlog.title} by ${createdBlog.author}`);
 
