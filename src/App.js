@@ -30,7 +30,7 @@ const App = () => {
   const blogFormRef = useRef();
 
   return (
-    <div>
+    <div style={{ maxWidth: "600px" }}>
       {message && (
         <div>
           <p>{message}</p>

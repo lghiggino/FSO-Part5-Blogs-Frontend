@@ -3,8 +3,6 @@ import Togglable from "./Toggable";
 
 const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false);
-  const hideWhenVisible = { display: visible ? "none" : "" };
-  const showWhenVisible = { display: visible ? "" : "none" };
 
   const toggleVisibility = () => {
     setVisible(!visible);
@@ -30,9 +28,11 @@ const Blog = ({ blog }) => {
           View
         </button>
       </div>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <p> {blog.url}</p>
-        <p> {blog.likes}</p>
+      <div style={{ display: !visible ? "none" : "" }}>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <p> url: {blog.url}</p>
+          <p> likes: {blog.likes}</p>
+        </div>
       </div>
     </>
   );
