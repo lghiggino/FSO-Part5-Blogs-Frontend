@@ -1,6 +1,5 @@
 import axios from "axios";
 const baseUrl = "/api/blogs";
-import jwt_decode from "jwt-decode";
 
 let token = null;
 let id = null;
@@ -50,4 +49,16 @@ const update = async (id, updatedBlog) => {
   return response.data;
 };
 
-export default { getAll, create, update, setToken, setUserId, setAuthor };
+const addLike = async (id) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+  const response = await axios.put(
+    `${baseUrl}/${id}/addlike`,
+    { userId: id },
+    config
+  );
+  return response.data;
+};
+
+export default { getAll, create, update, setToken, setUserId, setAuthor, addLike };

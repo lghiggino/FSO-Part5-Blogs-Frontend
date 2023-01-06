@@ -19,6 +19,7 @@ export const BlogForm = ({ setMessage, setErrorMessage, setBlogs, blogs, blogFor
     }
 
     const createdBlog = await blogService.create(newBlogData);
+
     blogFormRef.current.toggleVisibility();
 
     setMessage(`a new blog ${createdBlog.title} by ${createdBlog.author}`);
