@@ -26,10 +26,8 @@ const Blog = ({ blog, setErrorMessage }) => {
     <>
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: "grid",
+          gridTemplateColumns: "3fr 1fr 1fr",
         }}
       >
         <p>

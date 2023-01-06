@@ -12,8 +12,27 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
 
+  const preventUndefinedLikesValues = (blog) => {
+    if (!blog.likes) {
+      blog.likes = 0;
+    }
+  };
+
+  const onRender = async () => {
+    try {
+      const blogsRes = await blogService.getAll();
+      blogsRes.map((blog) => preventUndefinedLikesValues(blog));
+      const sortedByDecreasingLikes = blogsRes.sort((a, b) => {
+        return b.likes - a.likes;
+      });
+      setBlogs(sortedByDecreasingLikes);
+    } catch (error) {
+      setErrorMessage("Unable to load blogs from server");
+    }
+  };
+
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    onRender();
   }, []);
 
   useEffect(() => {
@@ -64,10 +83,16 @@ const App = () => {
         </div>
       )}
 
-      <h2>blogs</h2>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} setErrorMessage={setErrorMessage} />
-      ))}
+      {blogs.length ? (
+        <>
+          <h2>blogs</h2>
+          {blogs.map((blog) => (
+            <Blog key={blog.id} blog={blog} setErrorMessage={setErrorMessage} />
+          ))}
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
