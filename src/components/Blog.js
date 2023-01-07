@@ -22,7 +22,6 @@ const Blog = ({ blog, setErrorMessage }) => {
   const deleteBlog = async (blog) => {
     try {
       const captureConfirm = window.confirm(`Remove blog "${blog.title}" by ${blog.author}`);
-      console.log(captureConfirm);
       if (captureConfirm === true) {
         await blogService.remove(blog.id);
         window.location.reload();
