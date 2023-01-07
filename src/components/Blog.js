@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import blogService from "../services/blogs";
+import { PropTypes } from "prop-types";
 
 const Blog = ({ blog, setErrorMessage }) => {
   const [visible, setVisible] = useState(false);
@@ -21,7 +22,9 @@ const Blog = ({ blog, setErrorMessage }) => {
 
   const deleteBlog = async (blog) => {
     try {
-      const captureConfirm = window.confirm(`Remove blog "${blog.title}" by ${blog.author}`);
+      const captureConfirm = window.confirm(
+        `Remove blog "${blog.title}" by ${blog.author}`
+      );
       if (captureConfirm === true) {
         await blogService.remove(blog.id);
         window.location.reload();
@@ -80,6 +83,11 @@ const Blog = ({ blog, setErrorMessage }) => {
       </div>
     </>
   );
+};
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  setErrorMessage: PropTypes.func.isRequired,
 };
 
 export default Blog;
