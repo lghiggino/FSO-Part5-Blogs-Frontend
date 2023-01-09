@@ -51,12 +51,11 @@ const Blog = ({ blog, setErrorMessage }) => {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "3fr 1fr 1fr 1fr",
+          gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr",
         }}
       >
-        <p>
-          {blog.title} {blog.author}
-        </p>
+        <p>{blog.title}</p>
+        <p>{blog.author}</p>
         <button
           onClick={toggleVisibility}
           style={{ textTransform: "capitalize" }}
