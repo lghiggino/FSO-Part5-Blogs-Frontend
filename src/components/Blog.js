@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import blogService from "../services/blogs";
 import { PropTypes } from "prop-types";
+import LikeButton from "./LikeButton";
 
 const Blog = ({ blog, setErrorMessage }) => {
   const [visible, setVisible] = useState(false);
@@ -11,14 +12,14 @@ const Blog = ({ blog, setErrorMessage }) => {
     setVisible(!visible);
   };
 
-  const addLike = async (id) => {
-    try {
-      const res = await blogService.addLike(id);
-      setLocalLikes(res.likes);
-    } catch (error) {
-      setErrorMessage("Unable to update likes at this moment");
-    }
-  };
+  // const addLike = async (id) => {
+  //   try {
+  //     const res = await blogService.addLike(id);
+  //     setLocalLikes(res.likes);
+  //   } catch (error) {
+  //     setErrorMessage("Unable to update likes at this moment");
+  //   }
+  // };
 
   const deleteBlog = async (blog) => {
     try {
@@ -62,12 +63,11 @@ const Blog = ({ blog, setErrorMessage }) => {
         >
           View
         </button>
-        <button
-          onClick={() => addLike(blog.id)}
-          style={{ textTransform: "capitalize" }}
-        >
-          Like this
-        </button>
+        <LikeButton
+          blogId={blog.id}
+          setLocalLikes={setLocalLikes}
+          setErrorMessage={setErrorMessage}
+        />
         {blog.author === localUser && (
           <button
             onClick={() => deleteBlog(blog)}
