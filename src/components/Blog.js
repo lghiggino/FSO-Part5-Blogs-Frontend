@@ -39,6 +39,9 @@ const Blog = ({ blog, setErrorMessage }) => {
   }, [blog]);
 
   useEffect(() => {
+    if (!localStorage.getItem("loggedInBlogUser")) {
+      return;
+    }
     const storageUser = JSON.parse(localStorage.getItem("loggedInBlogUser"));
     setLocalUser(storageUser.username);
   }, []);
