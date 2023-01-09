@@ -79,8 +79,8 @@ const Blog = ({ blog, setErrorMessage }) => {
       </div>
       <div style={{ display: !visible ? "none" : "" }}>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <p> url: {blog.url}</p>
-          <p> likes: {localLikes}</p>
+          <p className={"blogUrl"}> url: {blog.url}</p>
+          <p id={"blog-likes"}> likes: {localLikes}</p>
         </div>
       </div>
     </>
