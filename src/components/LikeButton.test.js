@@ -20,7 +20,8 @@ describe("<LikeButton />", () => {
     expect(likeButton).toBeVisible();
 
     await user.click(likeButton);
+    await user.click(likeButton);
 
-    expect(mockHandler.mock.calls).toHaveLength(1);
+    expect(mockHandler.mock.calls).toHaveLength(2);
   });
 });
