@@ -12,14 +12,14 @@ const Blog = ({ blog, setErrorMessage }) => {
     setVisible(!visible);
   };
 
-  // const addLike = async (id) => {
-  //   try {
-  //     const res = await blogService.addLike(id);
-  //     setLocalLikes(res.likes);
-  //   } catch (error) {
-  //     setErrorMessage("Unable to update likes at this moment");
-  //   }
-  // };
+  const addLike = async (id) => {
+    try {
+      const res = await blogService.addLike(id);
+      setLocalLikes(res.likes);
+    } catch (error) {
+      setErrorMessage("Unable to update likes at this moment");
+    }
+  };
 
   const deleteBlog = async (blog) => {
     try {
@@ -67,6 +67,7 @@ const Blog = ({ blog, setErrorMessage }) => {
           blogId={blog.id}
           setLocalLikes={setLocalLikes}
           setErrorMessage={setErrorMessage}
+          addLike={addLike}
         />
         {blog.author === localUser && (
           <button

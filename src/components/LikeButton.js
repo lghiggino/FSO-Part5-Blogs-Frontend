@@ -1,16 +1,5 @@
-import { PropTypes } from "prop-types";
-import blogService from "../services/blogs";
-
-function LikeButton({ blogId, setLocalLikes, setErrorMessage }) {
-  const addLike = async (id) => {
-    try {
-      const res = await blogService.addLike(id);
-      setLocalLikes(res.likes);
-    } catch (error) {
-      setErrorMessage("Unable to update likes at this moment");
-    }
-  };
-
+import {  PropTypes } from "prop-types";
+function LikeButton({ blogId, addLike }) {
   return (
     <button
       id="like-button"
@@ -24,8 +13,7 @@ function LikeButton({ blogId, setLocalLikes, setErrorMessage }) {
 
 LikeButton.propTypes = {
   blogId: PropTypes.string.isRequired,
-  setLocalLikes: PropTypes.func.isRequired,
-  setErrorMessage: PropTypes.func.isRequired,
+  addLike: PropTypes.func.isRequired,
 };
 
 export default LikeButton;

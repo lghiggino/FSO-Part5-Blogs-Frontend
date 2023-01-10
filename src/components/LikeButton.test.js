@@ -9,11 +9,7 @@ describe("<LikeButton />", () => {
     const mockHandler = jest.fn();
 
     const { container } = render(
-      <LikeButton
-        blogId={"1"}
-        setLocalLikes={mockHandler}
-        setErrorMessage={() => {}}
-      />
+      <LikeButton blogId={"1"} addLike={mockHandler} />
     );
 
     screen.debug();
@@ -24,8 +20,6 @@ describe("<LikeButton />", () => {
     expect(likeButton).toBeVisible();
 
     await user.click(likeButton);
-
-    console.log(mockHandler.mock);
 
     expect(mockHandler.mock.calls).toHaveLength(1);
   });
