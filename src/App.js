@@ -12,6 +12,11 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [message, setMessage] = useState("");
 
+  const [newBlogData, setNewBlogData] = useState({
+    title: "",
+    url: "",
+  });
+
   const preventUndefinedLikesValues = (blog) => {
     if (!blog.likes) {
       blog.likes = 0;
@@ -48,6 +53,36 @@ const App = () => {
 
   const blogFormRef = useRef();
 
+  const addBlog = async (event) => {
+    event.preventDefault();
+
+    if (!newBlogData.title || !newBlogData.url) {
+      setErrorMessage("Unable to create a new blog without title or url");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 3000);
+      return;
+    }
+
+    const createdBlog = await blogService.create(newBlogData);
+
+    blogFormRef.current.toggleVisibility();
+
+    setMessage(`a new blog ${createdBlog.title} by ${createdBlog.author}`);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 3000);
+
+    const newBlogList = blogs.concat({
+      title: createdBlog.title,
+      author: createdBlog.author,
+      id: createdBlog.id,
+    });
+
+    setBlogs(newBlogList);
+  };
+
   return (
     <div style={{ maxWidth: "600px" }}>
       {message && (
@@ -73,11 +108,9 @@ const App = () => {
           <p>{user.name} logged-in</p>
           <Togglable buttonLabel="create new blog post" ref={blogFormRef}>
             <BlogForm
-              setMessage={setMessage}
-              setErrorMessage={setErrorMessage}
-              setBlogs={setBlogs}
-              blogs={blogs}
-              blogFormRef={blogFormRef}
+              addBlog={addBlog}
+              newBlogData={newBlogData}
+              setNewBlogData={setNewBlogData}
             />
           </Togglable>
         </div>
