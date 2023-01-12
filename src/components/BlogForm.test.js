@@ -22,33 +22,23 @@ describe("<BlogForm />", () => {
       />
     );
 
-    const inputs = screen.getAllByRole("textbox");
+    const titleInput = container.querySelector("#blog-title");
+    const urlInput = container.querySelector("#blog-url");
     const sendButton = screen.getByText("save");
 
-    expect(inputs).toBeDefined();
+    expect(titleInput).toBeDefined();
+    expect(urlInput).toBeDefined();
     expect(sendButton).toBeDefined();
 
-    await user.type(inputs[0], "new blog title test");
-    screen.debug();
-    await user.type(inputs[1], "www.newBlogTitleTest.com");
+    await user.type(titleInput, "new blog title test");
+    await user.type(urlInput, "www.newBlogTitleTest.com");
 
     await user.click(sendButton);
 
     expect(createBlog.mock.calls).toHaveLength(1);
-    // expect(createBlog.mock.calls[0][0].content).toBe("new blog title test");
-    // expect(createBlog.mock.calls[0][0].content).toBe(
-    //   "www.newBlogTitleTest.com"
-    // );
-
-    // const inputs = screen.getAllByRole("textbox");
-    // const sendButton = screen.getByText("save");
-
-    // userEvent.type(inputs[0], "title");
-    // userEvent.type(inputs[1], "url");
-    // userEvent.click(sendButton);
-
-    expect(createBlog.mock.calls).toHaveLength(1);
-    // expect(createBlog.mock.calls[0][0].title).toBe("title");
-    // expect(createBlog.mock.calls[0][0].url).toBe("url");
+    expect(createBlog.mock.calls[0][0].content).toBe("new blog title test");
+    expect(createBlog.mock.calls[0][0].content).toBe(
+      "www.newBlogTitleTest.com"
+    );
   });
 });
