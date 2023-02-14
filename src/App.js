@@ -19,6 +19,7 @@ const App = () => {
   };
 
   const addBlog = async (blogObject) => {
+    console.log({ blogObject });
     if (!blogObject.title || !blogObject.url) {
       setErrorMessage("Unable to create a new blog without title or url");
       setTimeout(() => {
@@ -29,10 +30,9 @@ const App = () => {
 
     try {
       const createdBlog = await blogService.create(
-        ...blogObject
-        // userId: blogService.setUserId(user.token)
+        blogObject
       );
-      setBlogs(blogs.concat(...createdBlog));
+      setBlogs(blogs.concat(createdBlog));
       blogFormRef.current.toggleVisibility();
 
       setMessage(`a new blog ${createdBlog.title} by ${createdBlog.author}`);
@@ -41,6 +41,7 @@ const App = () => {
         setMessage("");
       }, 3000);
     } catch (error) {
+      console.error(error.message);
       setErrorMessage("Unable to create blog a new blog");
     }
   };
