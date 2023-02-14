@@ -1,4 +1,25 @@
-export const BlogForm = ({ addBlog, newBlogData, setNewBlogData }) => {
+import { useState } from "react";
+import blogService from "../services/blogs";
+
+export const BlogForm = ({ createBlog }) => {
+  const [newBlogData, setNewBlogData] = useState({
+    title: "",
+    url: "",
+  });
+
+  const addBlog = (event) => {
+    event.preventDefault();
+    createBlog({
+      title: newBlogData.title,
+      url: newBlogData.url,
+    });
+
+    setNewBlogData({
+      title: "",
+      url: "",
+    });
+  };
+
   return (
     <form onSubmit={addBlog}>
       <label>Title:</label>
