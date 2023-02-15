@@ -17,18 +17,10 @@ describe("<BlogForm />", () => {
   });
 
   it("should call the event handler with the proper form data", async () => {
-    const createBlog = jest.fn((e) => e.preventDefault());
+    const createBlogJestFn = jest.fn(event);
     const user = userEvent.setup();
 
-    const { container } = render(
-      <BlogForm
-        setBlogs={() => {}}
-        setMessage={() => {}}
-        setErrorMessage={() => {}}
-        blogFormRef={"x"}
-        blogs={[]}
-      />
-    );
+    const { container } = render(<BlogForm createBlog={createBlogJestFn} />);
 
     const titleInput = container.querySelector("#blog-title");
     const urlInput = container.querySelector("#blog-url");
@@ -41,13 +33,13 @@ describe("<BlogForm />", () => {
     await user.type(titleInput, "new blog title test");
     await user.type(urlInput, "www.newBlogTitleTest.com");
 
-    screen.debug();
-
     await user.click(sendButton);
 
     // expect(createBlog.mock.calls).toHaveLength(1);
-    expect(createBlog.mock.calls[0][0].content).toBe("new blog title test");
-    expect(createBlog.mock.calls[0][0].content).toBe(
+    expect(createBlogJestFn.mock.calls[0][0].title).toBe(
+      "new blog title test"
+    );
+    expect(createBlogJestFn.mock.calls[0][0].url).toBe(
       "www.newBlogTitleTest.com"
     );
   });

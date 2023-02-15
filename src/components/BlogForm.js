@@ -1,5 +1,4 @@
 import { useState } from "react";
-import blogService from "../services/blogs";
 
 export const BlogForm = ({ createBlog }) => {
   const [newBlogData, setNewBlogData] = useState({
@@ -9,6 +8,7 @@ export const BlogForm = ({ createBlog }) => {
 
   const addBlog = (event) => {
     event.preventDefault();
+    console.log("entrou aqui >>>>>>>>>>>>>>.", newBlogData.title, newBlogData.url);
     createBlog({
       title: newBlogData.title,
       url: newBlogData.url,

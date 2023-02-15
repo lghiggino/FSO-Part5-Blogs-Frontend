@@ -19,6 +19,7 @@ const App = () => {
   };
 
   const addBlog = async (blogObject) => {
+    console.log("Entrou aqui 2 >>>>>>>>>>>", { blogObject });
     console.log({ blogObject });
     if (!blogObject.title || !blogObject.url) {
       setErrorMessage("Unable to create a new blog without title or url");
@@ -29,9 +30,7 @@ const App = () => {
     }
 
     try {
-      const createdBlog = await blogService.create(
-        blogObject
-      );
+      const createdBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(createdBlog));
       blogFormRef.current.toggleVisibility();
 
