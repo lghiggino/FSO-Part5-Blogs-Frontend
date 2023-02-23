@@ -23,7 +23,8 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:cypress/recommended"
     ]
   },
   "browserslist": {
@@ -45,6 +46,7 @@
     "@testing-library/user-event": "^14.4.3",
     "cypress": "^12.7.0",
     "eslint": "^8.28.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "jest-watch-typeahead": "^0.6.5"
   }
 }
